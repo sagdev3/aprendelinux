@@ -42,13 +42,8 @@ export default function Home() {
           <div className="border-b border-slate-800/80 bg-slate-950/90 px-4 py-4 lg:px-6">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">Studio</p>
-                <p className="mt-1 text-sm text-slate-400">Perfil, aprendizaje, laboratorio y mapa como vistas separadas.</p>
-              </div>
-              <div className="flex flex-wrap gap-2 text-xs text-slate-300">
-                <span className="rounded-full border border-slate-800 bg-slate-900/80 px-3 py-1">GitHub x GNOME</span>
-                <span className="rounded-full border border-slate-800 bg-slate-900/80 px-3 py-1">Dark shell</span>
-                <span className="rounded-full border border-slate-800 bg-slate-900/80 px-3 py-1">Command lab</span>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">Linux Quest</p>
+                <p className="mt-1 text-sm text-slate-400">Ruta práctica de comandos Linux</p>
               </div>
             </div>
           </div>
