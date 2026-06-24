@@ -19,7 +19,7 @@ function loadEnvFile() {
 
 loadEnvFile();
 
-const { createMysqlPool, handleApi, hashPassword, securityHeaders } = require("./lib/api");
+const { assertSecureSecret, createMysqlPool, handleApi, hashPassword, securityHeaders } = require("./lib/api");
 
 const root = __dirname;
 const port = Number(process.env.PORT || 3000);
@@ -66,6 +66,7 @@ function createHttpServer(pool) {
 }
 
 if (require.main === module) {
+  assertSecureSecret();
   const server = createHttpServer(createMysqlPool());
   server.listen(port, () => {
     console.log(`Linux Quest disponible en http://localhost:${port}`);

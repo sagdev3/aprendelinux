@@ -38,3 +38,24 @@ CREATE TABLE IF NOT EXISTS student_profiles (
     FOREIGN KEY (user_id) REFERENCES users (id)
     ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS user_sessions (
+  session_id VARCHAR(64) NOT NULL,
+  user_id INT UNSIGNED NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  expires_at TIMESTAMP NOT NULL,
+  PRIMARY KEY (session_id),
+  KEY user_sessions_user_id_index (user_id),
+  KEY user_sessions_expires_at_index (expires_at),
+  CONSTRAINT user_sessions_user_fk
+    FOREIGN KEY (user_id) REFERENCES users (id)
+    ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS rate_buckets (
+  bucket_key VARCHAR(200) NOT NULL,
+  count INT UNSIGNED NOT NULL DEFAULT 0,
+  reset_at TIMESTAMP NOT NULL,
+  PRIMARY KEY (bucket_key),
+  KEY rate_buckets_reset_at_index (reset_at)
+);

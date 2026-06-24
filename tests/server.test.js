@@ -6,10 +6,61 @@ class MockPool {
   constructor() {
     this.users = [];
     this.progress = new Map();
+    this.sessions = new Map();
+    this.rateBuckets = new Map();
     this.nextUserId = 1;
   }
 
   async execute(sql, params = []) {
+    if (sql.startsWith("DELETE FROM user_sessions WHERE expires_at")) {
+      const now = Date.now();
+      for (const [sessionId, session] of this.sessions.entries()) {
+        if (session.expires_at.getTime() <= now) this.sessions.delete(sessionId);
+      }
+      return [{ affectedRows: 0 }];
+    }
+
+    if (sql.startsWith("DELETE FROM rate_buckets WHERE reset_at")) {
+      const now = Date.now();
+      for (const [bucketKey, bucket] of this.rateBuckets.entries()) {
+        if (bucket.reset_at.getTime() <= now) this.rateBuckets.delete(bucketKey);
+      }
+      return [{ affectedRows: 0 }];
+    }
+
+    if (sql.startsWith("INSERT INTO rate_buckets")) {
+      const bucketKey = params[0];
+      const resetAt = params[1];
+      const existing = this.rateBuckets.get(bucketKey);
+      if (!existing || existing.reset_at.getTime() <= Date.now()) {
+        this.rateBuckets.set(bucketKey, { count: 1, reset_at: resetAt });
+      } else {
+        existing.count += 1;
+      }
+      return [{ affectedRows: 1 }];
+    }
+
+    if (sql.startsWith("SELECT count FROM rate_buckets WHERE bucket_key = ?")) {
+      const bucket = this.rateBuckets.get(params[0]);
+      return [[bucket ? { count: bucket.count } : undefined].filter(Boolean)];
+    }
+
+    if (sql.startsWith("INSERT INTO user_sessions")) {
+      this.sessions.set(params[0], { user_id: params[1], expires_at: params[2] });
+      return [{ affectedRows: 1 }];
+    }
+
+    if (sql.startsWith("SELECT user_id FROM user_sessions WHERE session_id = ?")) {
+      const session = this.sessions.get(params[0]);
+      const valid = session && session.expires_at.getTime() > Date.now();
+      return [[valid ? { user_id: session.user_id } : undefined].filter(Boolean)];
+    }
+
+    if (sql.startsWith("DELETE FROM user_sessions WHERE session_id = ?")) {
+      const deleted = this.sessions.delete(params[0]);
+      return [{ affectedRows: deleted ? 1 : 0 }];
+    }
+
     if (sql.startsWith("SELECT id, name, email FROM users WHERE id = ?")) {
       const user = this.users.find((item) => item.id === params[0]);
       return [[user ? { id: user.id, name: user.name, email: user.email } : undefined].filter(Boolean)];
@@ -193,6 +244,16 @@ async function csrf(pool) {
     const cookie = cookieHeaderFromSetCookie(result.headers["set-cookie"]);
     assert.ok(cookie.includes("lq_session="));
 
+    result = await request(pool, "POST", "/api/register", {
+      headers: { Cookie: csrfData.cookie, "X-CSRF-Token": csrfData.token, "X-Forwarded-For": "203.0.113.10" },
+      body: {
+        name: "Ada Clone",
+        email: "ada@example.com",
+        password: "segura123"
+      }
+    });
+    assert.strictEqual(result.response.statusCode, 409);
+
     result = await request(pool, "GET", "/api/progress", {
       headers: { Cookie: cookie }
     });
@@ -239,6 +300,34 @@ async function csrf(pool) {
       body: { email: "ada@example.com", password: "incorrecta" }
     });
     assert.strictEqual(result.response.statusCode, 401);
+
+    result = await request(pool, "POST", "/api/login", {
+      headers: { Cookie: csrfData.cookie, "X-CSRF-Token": csrfData.token, "X-Forwarded-For": "203.0.113.11" },
+      body: { email: "ada@example.com", password: "segura123" }
+    });
+    assert.strictEqual(result.response.statusCode, 200);
+    assert.strictEqual(result.body.user.email, "ada@example.com");
+    const loginCookie = cookieHeaderFromSetCookie(result.headers["set-cookie"]);
+    assert.ok(loginCookie.includes("lq_session="));
+
+    result = await request(pool, "GET", "/api/progress", {
+      headers: { Cookie: loginCookie }
+    });
+    assert.strictEqual(result.response.statusCode, 200);
+
+    for (let index = 0; index < 8; index += 1) {
+      result = await request(pool, "POST", "/api/login", {
+        headers: { Cookie: csrfData.cookie, "X-CSRF-Token": csrfData.token, "X-Forwarded-For": "203.0.113.12" },
+        body: { email: "ada@example.com", password: "incorrecta" }
+      });
+      assert.strictEqual(result.response.statusCode, 401);
+    }
+
+    result = await request(pool, "POST", "/api/login", {
+      headers: { Cookie: csrfData.cookie, "X-CSRF-Token": csrfData.token, "X-Forwarded-For": "203.0.113.12" },
+      body: { email: "ada@example.com", password: "incorrecta" }
+    });
+    assert.strictEqual(result.response.statusCode, 429);
 
     result = await request(pool, "POST", "/api/logout", {
       headers: { Cookie: `${cookie}; ${csrfData.cookie}`, "X-CSRF-Token": csrfData.token },
