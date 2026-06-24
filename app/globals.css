@@ -927,6 +927,10 @@
            active:scale-[0.97];
   }
 
+  .top-logout {
+    @apply shrink-0 px-4 text-xs sm:text-sm;
+  }
+
   /* ── Botón de reset de progreso — acción destructiva leve ──────────────── */
   /* El icono ↺ necesita un tooltip más visible en móvil */
   #resetProgress {

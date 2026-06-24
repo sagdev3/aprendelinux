@@ -22,6 +22,9 @@ function Topbar() {
         <div id="globalSearchResults" className="global-search-results" aria-live="polite" />
       </div>
       <button className="account-button" id="accountButton" type="button">Entrar</button>
+      <button className="danger-action top-logout hidden" id="topLogoutButton" type="button">
+        Cerrar sesión
+      </button>
       <button
         className="icon-button"
         id="resetProgress"

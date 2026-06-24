@@ -1453,7 +1453,24 @@ function renderAuth() {
     accountButton.textContent = currentUser ? currentUser.name : "Entrar";
     accountButton.title = currentUser ? "Ver perfil" : "Iniciar sesión";
   }
+  const topLogoutButton = $("#topLogoutButton");
+  if (topLogoutButton) topLogoutButton.classList.toggle("hidden", !currentUser);
   renderProfile();
+}
+
+async function logoutCurrentUser({ showModal = true } = {}) {
+  try {
+    await syncProgressNow();
+    await apiRequest("/api/logout", { method: "POST", body: "{}" });
+  } catch (error) {
+    setAuthFeedback(error.message, true);
+  } finally {
+    currentUser = null;
+    studentProfile = null;
+    renderAuth();
+    if (showModal) openAuthModal();
+    setAuthFeedback("Sesión cerrada. El progreso queda guardado localmente.");
+  }
 }
 
 function renderProfile() {
@@ -2492,19 +2509,12 @@ $("#profileForm").addEventListener("submit", async (event) => {
   }
 });
 
-$("#logoutButton").addEventListener("click", async () => {
-  try {
-    await syncProgressNow();
-    await apiRequest("/api/logout", { method: "POST", body: "{}" });
-  } catch (error) {
-    setAuthFeedback(error.message, true);
-  } finally {
-    currentUser = null;
-    studentProfile = null;
-    renderAuth();
-    openAuthModal();
-    setAuthFeedback("Sesión cerrada. El progreso queda guardado localmente.");
-  }
+$("#logoutButton").addEventListener("click", () => {
+  logoutCurrentUser({ showModal: true });
+});
+
+$("#topLogoutButton").addEventListener("click", () => {
+  logoutCurrentUser({ showModal: false });
 });
 
 $("#cheatSearch").addEventListener("input", (event) => {
