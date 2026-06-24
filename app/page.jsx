@@ -60,8 +60,12 @@ function AuthModal() {
           </form>
         </div>
         <div className="auth-actions hidden" id="authActions">
-          <button className="complete-button" id="syncProgress" type="button">Guardar avance</button>
-          <button className="secondary-action" id="logoutButton" type="button">Cerrar sesión</button>
+          <button className="complete-button" id="syncProgress" type="button">
+            ✓ Guardar avance
+          </button>
+          <button className="danger-action" id="logoutButton" type="button">
+            Cerrar sesión
+          </button>
         </div>
         <p className="quiz-feedback" id="authFeedback" />
       </section>
@@ -431,6 +435,8 @@ export default async function Home() {
           </div>
 
           {/* Vistas de la app — ahora JSX real, sin dangerouslySetInnerHTML */}
+          {/* WCAG 2.4.1: skip link para usuarios de teclado */}
+          <a className="skip-link" href="#app">Ir al contenido principal</a>
           <Topbar />
           <AuthModal />
           <main id="app">
