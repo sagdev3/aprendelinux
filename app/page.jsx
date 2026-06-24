@@ -10,10 +10,6 @@ export default function Home() {
           <div className="flex h-full flex-col gap-4">
             <div className="rounded-[18px] border border-cyan-400/20 bg-cyan-400/10 p-4">
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">Linux Quest</p>
-              <h1 className="mt-2 text-2xl font-semibold text-slate-50">Panel hacker</h1>
-              <p className="mt-2 text-sm leading-6 text-slate-400">
-                Interfaz de aprendizaje por secciones, con terminal, mapa, perfil y rutas de comando.
-              </p>
             </div>
 
             <nav className="grid gap-2">
