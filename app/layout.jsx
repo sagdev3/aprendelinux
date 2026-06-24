@@ -7,8 +7,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
+        cz-shortcut-listen="true"
         style={{
           backgroundColor: "#050816",
           color: "#e2e8f0",
