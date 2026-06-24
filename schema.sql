@@ -1,0 +1,40 @@
+CREATE DATABASE IF NOT EXISTS linux_quest CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+USE linux_quest;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(80) NOT NULL,
+  email VARCHAR(190) NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  password_salt VARCHAR(64) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY users_email_unique (email)
+);
+
+CREATE TABLE IF NOT EXISTS user_progress (
+  user_id INT UNSIGNED NOT NULL,
+  active_module INT UNSIGNED NOT NULL DEFAULT 0,
+  mode VARCHAR(12) NOT NULL DEFAULT 'kid',
+  done_modules JSON NOT NULL,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (user_id),
+  CONSTRAINT user_progress_user_fk
+    FOREIGN KEY (user_id) REFERENCES users (id)
+    ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS student_profiles (
+  user_id INT UNSIGNED NOT NULL,
+  display_name VARCHAR(80) NOT NULL,
+  role VARCHAR(40) NOT NULL DEFAULT 'Estudiante',
+  goal VARCHAR(120) NOT NULL DEFAULT '',
+  level VARCHAR(40) NOT NULL DEFAULT 'Inicial',
+  bio VARCHAR(300) NOT NULL DEFAULT '',
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (user_id),
+  CONSTRAINT student_profiles_user_fk
+    FOREIGN KEY (user_id) REFERENCES users (id)
+    ON DELETE CASCADE
+);
