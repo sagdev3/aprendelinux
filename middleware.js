@@ -26,6 +26,7 @@ export function middleware(request) {
     "object-src 'none'",
     "base-uri 'self'",
     "frame-ancestors 'none'",
+    "report-uri /api/csp-report",
   ].join("; ");
 
   const requestHeaders = new Headers(request.headers);

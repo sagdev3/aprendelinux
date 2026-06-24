@@ -1,5 +1,6 @@
 const assert = require("assert");
 const { Readable } = require("stream");
+process.env.NODE_ENV = "test";
 const { handleApi, resetApiStateForTests } = require("../lib/api");
 
 class MockPool {
@@ -28,6 +29,23 @@ class MockPool {
       return [{ affectedRows: 0 }];
     }
 
+    if (sql.startsWith("DELETE FROM user_sessions") && sql.includes("recent_sessions")) {
+      const userId = params[0];
+      const keep = [...this.sessions.entries()]
+        .filter(([, session]) => session.user_id === userId)
+        .sort(([, a], [, b]) => b.created_at.getTime() - a.created_at.getTime())
+        .slice(0, 4)
+        .map(([sessionId]) => sessionId);
+      let affectedRows = 0;
+      for (const [sessionId, session] of this.sessions.entries()) {
+        if (session.user_id === userId && !keep.includes(sessionId)) {
+          this.sessions.delete(sessionId);
+          affectedRows += 1;
+        }
+      }
+      return [{ affectedRows }];
+    }
+
     if (sql.startsWith("INSERT INTO rate_buckets")) {
       const bucketKey = params[0];
       const resetAt = params[1];
@@ -46,7 +64,11 @@ class MockPool {
     }
 
     if (sql.startsWith("INSERT INTO user_sessions")) {
-      this.sessions.set(params[0], { user_id: params[1], expires_at: params[2] });
+      this.sessions.set(params[0], {
+        user_id: params[1],
+        expires_at: params[2],
+        created_at: new Date(Date.now() + this.sessions.size)
+      });
       return [{ affectedRows: 1 }];
     }
 
@@ -220,6 +242,11 @@ async function csrf(pool) {
     assert.strictEqual(result.response.statusCode, 200);
     assert.strictEqual(result.body.user, null);
 
+    result = await request(pool, "POST", "/api/csp-report", {
+      body: { "csp-report": { "violated-directive": "script-src" } }
+    });
+    assert.strictEqual(result.response.statusCode, 204);
+
     result = await request(pool, "POST", "/api/register", {
       body: {
         name: "Mallory",
@@ -314,6 +341,16 @@ async function csrf(pool) {
       headers: { Cookie: loginCookie }
     });
     assert.strictEqual(result.response.statusCode, 200);
+
+    for (let index = 0; index < 6; index += 1) {
+      result = await request(pool, "POST", "/api/login", {
+        headers: { Cookie: csrfData.cookie, "X-CSRF-Token": csrfData.token, "X-Forwarded-For": `203.0.113.${30 + index}` },
+        body: { email: "ada@example.com", password: "segura123" }
+      });
+      assert.strictEqual(result.response.statusCode, 200);
+    }
+    const adaSessions = [...pool.sessions.values()].filter((session) => session.user_id === 1);
+    assert.ok(adaSessions.length <= 5);
 
     for (let index = 0; index < 8; index += 1) {
       result = await request(pool, "POST", "/api/login", {
