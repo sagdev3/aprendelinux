@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
-import { randomBytes } from "crypto";
+
+function generateNonce() {
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  return btoa(String.fromCharCode(...bytes));
+}
 
 /**
  * Middleware de Next.js — genera un nonce por request y lo inyecta
@@ -9,7 +14,7 @@ import { randomBytes } from "crypto";
  * pueda leerlo con `headers()` y aplicarlo a los <Script> que necesiten.
  */
 export function middleware(request) {
-  const nonce = randomBytes(16).toString("base64");
+  const nonce = generateNonce();
 
   const csp = [
     "default-src 'self'",
