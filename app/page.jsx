@@ -23,18 +23,6 @@ export default function Home() {
               <a className="rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 text-sm text-slate-200 transition hover:border-cyan-400/40 hover:bg-slate-800" href="#vista-recursos">Recursos</a>
               <a className="rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 text-sm text-slate-200 transition hover:border-cyan-400/40 hover:bg-slate-800" href="#vista-mapa">Mapa</a>
             </nav>
-
-            <div className="mt-auto grid gap-3 rounded-[18px] border border-slate-800 bg-slate-900/60 p-4">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Secciones</p>
-                <p className="mt-1 text-sm text-slate-300">Perfil separado del aprendizaje, laboratorio aislado y recursos de apoyo.</p>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-100">Tailwind</span>
-                <span className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs text-cyan-100">Next.js</span>
-                <span className="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-xs text-slate-300">MySQL</span>
-              </div>
-            </div>
           </div>
         </aside>
 
