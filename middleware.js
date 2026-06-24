@@ -15,10 +15,15 @@ function generateNonce() {
  */
 export function middleware(request) {
   const nonce = generateNonce();
+  const scriptSrc = [
+    "'self'",
+    `'nonce-${nonce}'`,
+    ...(process.env.NODE_ENV === "production" ? [] : ["'unsafe-eval'"]),
+  ].join(" ");
 
   const csp = [
     "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}'`,
+    `script-src ${scriptSrc}`,
     "style-src 'self' 'unsafe-inline'", // estilos inline necesarios por Tailwind en prod
     "img-src 'self' data:",
     "font-src 'self'",
