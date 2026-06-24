@@ -1,31 +1,23 @@
 /** @type {import('next').NextConfig} */
+
+/**
+ * Las cabeceras de seguridad principales (CSP con nonce, HSTS, X-Frame-Options)
+ * se gestionan en middleware.js, que genera un nonce por request.
+ *
+ * Aquí solo se mantienen cabeceras estáticas para rutas de _next/static y assets
+ * que el middleware excluye de forma explícita.
+ */
 const nextConfig = {
   reactStrictMode: true,
   async headers() {
-    const securityHeaders = [
-      {
-        key: "Content-Security-Policy",
-        value: [
-          "default-src 'self'",
-          "script-src 'self' 'unsafe-inline'",
-          "style-src 'self' 'unsafe-inline'",
-          "img-src 'self' data:",
-          "font-src 'self'",
-          "connect-src 'self'",
-          "object-src 'none'",
-          "base-uri 'self'",
-          "frame-ancestors 'none'"
-        ].join("; ")
-      },
-      { key: "X-Content-Type-Options", value: "nosniff" },
-      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-      { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" }
-    ];
-
     return [
       {
-        source: "/:path*",
-        headers: securityHeaders
+        // Cabeceras de seguridad para archivos estáticos (no pasan por middleware)
+        source: "/_next/static/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" }
+        ]
       }
     ];
   }
