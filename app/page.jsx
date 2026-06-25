@@ -409,7 +409,7 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
-      <div className="mx-auto grid min-h-screen max-w-[1800px] gap-4 px-4 py-4 lg:grid-cols-[280px_minmax(0,1fr)] lg:px-6 lg:py-6">
+      <div className="mx-auto grid min-h-screen max-w-[1800px] gap-4 px-4 py-4 lg:grid-cols-[240px_minmax(0,1fr)] lg:px-6 lg:py-6">
         {/* Sidebar — visible solo en lg+; reemplaza al topnav en desktop */}
         <aside className="sidenav">
           {/* Logo / marca */}
@@ -465,8 +465,8 @@ export default async function Home() {
           <button className="sidenav-logout hidden" id="topLogoutButtonSide" type="button">Cerrar sesión</button>
         </aside>
 
-        {/* Contenido principal */}
-        <section className="min-w-0 rounded-[20px] border border-slate-800/80 bg-slate-950/70 shadow-2xl shadow-black/25">
+        {/* Contenido principal — lg:col-start-2 fixes auto-placement when sidenav is display:none */}
+        <section className="overflow-hidden rounded-[20px] border border-slate-800/80 bg-slate-950/70 shadow-2xl shadow-black/25 lg:col-start-2">
           {/* Vistas de la app — ahora JSX real, sin dangerouslySetInnerHTML */}
           {/* WCAG 2.4.1: skip link para usuarios de teclado */}
           <a className="skip-link" href="#app">Ir al contenido principal</a>
