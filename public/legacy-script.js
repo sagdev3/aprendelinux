@@ -1455,6 +1455,15 @@ function renderAuth() {
   }
   const topLogoutButton = $("#topLogoutButton");
   if (topLogoutButton) topLogoutButton.classList.toggle("hidden", !currentUser);
+  // Sidebar: indicador de sesión
+  const sidenavDot = document.querySelector(".sidenav-session-dot");
+  const sidenavLabel = $("#sidenavSessionLabel");
+  if (sidenavDot) sidenavDot.classList.toggle("online", Boolean(currentUser));
+  if (sidenavLabel) {
+    sidenavLabel.textContent = currentUser
+      ? currentUser.name
+      : "Sin sesión";
+  }
   renderProfile();
 }
 

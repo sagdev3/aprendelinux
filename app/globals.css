@@ -84,7 +84,7 @@
            bg-cyan-400/10 font-mono text-cyan-200;
   }
 
-  /* ── Navegación principal ───────────────────────────────────────────────── */
+  /* ── Navegación principal (mobile/tablet) ───────────────────────────────── */
   .topnav {
     @apply ml-auto flex gap-1 overflow-x-auto rounded-2xl border border-slate-800/70
            bg-slate-900/50 p-1;
@@ -103,6 +103,69 @@
 
   .topnav button.active {
     @apply border-cyan-400/40 bg-cyan-400/10 text-cyan-100 font-semibold;
+  }
+
+  /* ── Sidebar vertical (desktop lg+) ─────────────────────────────────────── */
+  .sidenav {
+    @apply rounded-[20px] border border-slate-800/80 bg-slate-950/90
+           p-4 shadow-2xl shadow-black/30 gap-3;
+  }
+
+  .sidenav-brand {
+    @apply flex items-center gap-3 rounded-[18px] border border-cyan-400/20
+           bg-cyan-400/10 px-4 py-3;
+  }
+
+  .sidenav-brand-mark {
+    @apply grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-cyan-400/30
+           bg-cyan-400/10 font-mono text-sm font-bold text-cyan-200;
+  }
+
+  .sidenav-brand-name {
+    @apply text-sm font-semibold text-cyan-100 tracking-wide;
+  }
+
+  .sidenav-nav {
+    @apply flex flex-col gap-1;
+  }
+
+  .sidenav-item {
+    @apply flex w-full items-center gap-3 rounded-2xl border border-transparent
+           bg-transparent px-4 py-3 text-sm font-medium text-slate-300
+           transition-all duration-150 text-left
+           hover:border-slate-700 hover:bg-slate-800/70 hover:text-white
+           focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+           focus-visible:outline-cyan-400;
+    min-height: 44px;
+  }
+
+  .sidenav-item.active {
+    @apply border-cyan-400/35 bg-cyan-400/10 text-cyan-100 font-semibold;
+  }
+
+  .sidenav-item svg {
+    @apply shrink-0 opacity-70;
+  }
+
+  .sidenav-item.active svg {
+    @apply opacity-100;
+  }
+
+  .sidenav-session {
+    @apply flex items-center gap-2 rounded-2xl border border-slate-800/70
+           bg-slate-900/60 px-4 py-3;
+  }
+
+  .sidenav-session-dot {
+    @apply h-2 w-2 shrink-0 rounded-full bg-slate-600;
+  }
+
+  .sidenav-session-dot.online {
+    @apply bg-emerald-400;
+  }
+
+  .sidenav-session-label {
+    @apply truncate text-xs text-slate-400;
   }
 
   /* ── Buscador global ────────────────────────────────────────────────────── */

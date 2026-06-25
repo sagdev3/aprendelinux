@@ -10,7 +10,7 @@ function Topbar() {
         <span className="brand-mark">LQ</span>
         <span>Linux Quest</span>
       </a>
-      <nav className="topnav" aria-label="Secciones principales">
+      <nav className="topnav lg:hidden" aria-label="Secciones principales">
         <button className="active" type="button" data-view-target="perfil">Perfil</button>
         <button type="button" data-view-target="aprendizaje">Aprendizaje</button>
         <button type="button" data-view-target="laboratorio">Laboratorio</button>
@@ -410,19 +410,55 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <div className="mx-auto grid min-h-screen max-w-[1800px] gap-4 px-4 py-4 lg:grid-cols-[280px_minmax(0,1fr)] lg:px-6 lg:py-6">
-        {/* Sidebar */}
-        <aside className="hidden rounded-[20px] border border-slate-800/80 bg-slate-950/90 p-4 shadow-2xl shadow-black/30 lg:sticky lg:top-6 lg:block lg:h-[calc(100vh-3rem)]">
-          <div className="flex h-full flex-col gap-4">
-            <div className="rounded-[18px] border border-cyan-400/20 bg-cyan-400/10 p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">Linux Quest</p>
-            </div>
-            <nav className="grid gap-2">
-              <a className="rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 text-sm text-slate-200 transition hover:border-cyan-400/40 hover:bg-slate-800" href="#vista-perfil">Perfil</a>
-              <a className="rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 text-sm text-slate-200 transition hover:border-cyan-400/40 hover:bg-slate-800" href="#vista-aprendizaje">Aprendizaje</a>
-              <a className="rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 text-sm text-slate-200 transition hover:border-cyan-400/40 hover:bg-slate-800" href="#vista-laboratorio">Laboratorio</a>
-              <a className="rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 text-sm text-slate-200 transition hover:border-cyan-400/40 hover:bg-slate-800" href="#vista-recursos">Recursos</a>
-              <a className="rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 text-sm text-slate-200 transition hover:border-cyan-400/40 hover:bg-slate-800" href="#vista-mapa">Mapa</a>
-            </nav>
+        {/* Sidebar — visible solo en lg+; reemplaza al topnav en desktop */}
+        <aside className="sidenav hidden lg:sticky lg:top-6 lg:flex lg:h-[calc(100vh-3rem)] lg:flex-col">
+          {/* Logo / marca */}
+          <div className="sidenav-brand">
+            <span className="sidenav-brand-mark">LQ</span>
+            <span className="sidenav-brand-name">Linux Quest</span>
+          </div>
+
+          {/* Navegación principal — mismos data-view-target que el topnav */}
+          <nav className="sidenav-nav" aria-label="Secciones principales">
+            <button className="sidenav-item active" type="button" data-view-target="perfil">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+              <span>Perfil</span>
+            </button>
+            <button className="sidenav-item" type="button" data-view-target="aprendizaje">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+              <span>Aprendizaje</span>
+            </button>
+            <button className="sidenav-item" type="button" data-view-target="laboratorio">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+              </svg>
+              <span>Laboratorio</span>
+            </button>
+            <button className="sidenav-item" type="button" data-view-target="recursos">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              <span>Recursos</span>
+            </button>
+            <button className="sidenav-item" type="button" data-view-target="mapa">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/>
+              </svg>
+              <span>Mapa</span>
+            </button>
+          </nav>
+
+          {/* Espaciador */}
+          <div className="mt-auto" />
+
+          {/* Indicador de sesión en sidebar */}
+          <div className="sidenav-session">
+            <span className="sidenav-session-dot" />
+            <span className="sidenav-session-label" id="sidenavSessionLabel">Sin sesión</span>
           </div>
         </aside>
 
