@@ -411,7 +411,7 @@ export default async function Home() {
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <div className="mx-auto grid min-h-screen max-w-[1800px] gap-4 px-4 py-4 lg:grid-cols-[280px_minmax(0,1fr)] lg:px-6 lg:py-6">
         {/* Sidebar — visible solo en lg+; reemplaza al topnav en desktop */}
-        <aside className="sidenav hidden lg:sticky lg:top-6 lg:flex lg:h-[calc(100vh-3rem)] lg:flex-col">
+        <aside className="sidenav">
           {/* Logo / marca */}
           <div className="sidenav-brand">
             <span className="sidenav-brand-mark">LQ</span>
@@ -461,8 +461,8 @@ export default async function Home() {
             <span className="sidenav-session-label" id="sidenavSessionLabel">Sin sesión</span>
           </div>
           {/* Botones de cuenta — visibles en sidebar desktop */}
-          <button className="account-button sidenav-account" id="accountButtonSide" type="button">Entrar</button>
-          <button className="danger-action top-logout hidden sidenav-logout" id="topLogoutButtonSide" type="button">Cerrar sesión</button>
+          <button className="sidenav-account" id="accountButtonSide" type="button">Entrar</button>
+          <button className="sidenav-logout hidden" id="topLogoutButtonSide" type="button">Cerrar sesión</button>
         </aside>
 
         {/* Contenido principal */}
