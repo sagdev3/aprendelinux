@@ -1460,10 +1460,16 @@ function renderAuth() {
   const sidenavLabel = $("#sidenavSessionLabel");
   if (sidenavDot) sidenavDot.classList.toggle("online", Boolean(currentUser));
   if (sidenavLabel) {
-    sidenavLabel.textContent = currentUser
-      ? currentUser.name
-      : "Sin sesión";
+    sidenavLabel.textContent = currentUser ? currentUser.name : "Sin sesión";
   }
+  // Sidebar: botón de cuenta y logout
+  const accountButtonSide = $("#accountButtonSide");
+  if (accountButtonSide) {
+    accountButtonSide.textContent = currentUser ? currentUser.name : "Entrar";
+    accountButtonSide.title = currentUser ? "Ver perfil" : "Iniciar sesión";
+  }
+  const topLogoutButtonSide = $("#topLogoutButtonSide");
+  if (topLogoutButtonSide) topLogoutButtonSide.classList.toggle("hidden", !currentUser);
   renderProfile();
 }
 
@@ -2525,6 +2531,26 @@ $("#logoutButton").addEventListener("click", () => {
 $("#topLogoutButton").addEventListener("click", () => {
   logoutCurrentUser({ showModal: false });
 });
+
+// Sidebar desktop: botón de cuenta
+const _accountButtonSide = $("#accountButtonSide");
+if (_accountButtonSide) {
+  _accountButtonSide.addEventListener("click", () => {
+    if (currentUser) {
+      showView("perfil");
+    } else {
+      openAuthModal();
+    }
+  });
+}
+
+// Sidebar desktop: botón de logout
+const _topLogoutButtonSide = $("#topLogoutButtonSide");
+if (_topLogoutButtonSide) {
+  _topLogoutButtonSide.addEventListener("click", () => {
+    logoutCurrentUser({ showModal: false });
+  });
+}
 
 $("#cheatSearch").addEventListener("input", (event) => {
   renderCheatSheet(event.target.value);

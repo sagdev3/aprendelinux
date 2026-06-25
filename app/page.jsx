@@ -5,7 +5,7 @@ import Script from "next/script";
 
 function Topbar() {
   return (
-    <header className="topbar">
+    <header className="topbar lg:hidden">
       <a className="brand" href="#app" aria-label="Linux Quest inicio">
         <span className="brand-mark">LQ</span>
         <span>Linux Quest</span>
@@ -460,19 +460,13 @@ export default async function Home() {
             <span className="sidenav-session-dot" />
             <span className="sidenav-session-label" id="sidenavSessionLabel">Sin sesión</span>
           </div>
+          {/* Botones de cuenta — visibles en sidebar desktop */}
+          <button className="account-button sidenav-account" id="accountButtonSide" type="button">Entrar</button>
+          <button className="danger-action top-logout hidden sidenav-logout" id="topLogoutButtonSide" type="button">Cerrar sesión</button>
         </aside>
 
         {/* Contenido principal */}
         <section className="min-w-0 rounded-[20px] border border-slate-800/80 bg-slate-950/70 shadow-2xl shadow-black/25">
-          <div className="border-b border-slate-800/80 bg-slate-950/90 px-4 py-4 lg:px-6">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">Linux Quest</p>
-                <p className="mt-1 text-sm text-slate-400">Ruta práctica de comandos Linux</p>
-              </div>
-            </div>
-          </div>
-
           {/* Vistas de la app — ahora JSX real, sin dangerouslySetInnerHTML */}
           {/* WCAG 2.4.1: skip link para usuarios de teclado */}
           <a className="skip-link" href="#app">Ir al contenido principal</a>

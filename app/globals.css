@@ -168,6 +168,19 @@
     @apply truncate text-xs text-slate-400;
   }
 
+  .sidenav-account {
+    @apply flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-700/80
+           bg-slate-900/60 px-4 py-2.5 text-sm font-medium text-slate-200
+           transition-all duration-150
+           hover:border-cyan-400/30 hover:bg-slate-800/80 hover:text-white
+           focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400;
+    min-height: 44px;
+  }
+
+  .sidenav-logout {
+    @apply w-full justify-center text-sm;
+  }
+
   /* ── Buscador global ────────────────────────────────────────────────────── */
   .global-search {
     @apply relative hidden w-[260px] max-w-[24vw] lg:block;
