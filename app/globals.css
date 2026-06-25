@@ -1056,23 +1056,21 @@
    */
   .skip-link {
     position: absolute;
-    left: -9999px;
-    top: auto;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    z-index: 100;
-    @apply rounded-2xl border border-cyan-400/50 bg-slate-950 px-6 py-3
-           text-sm font-semibold text-cyan-300 shadow-2xl shadow-black/40;
+    top: -100%;
+    left: 0;
+    z-index: 9999;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 0 0 8px 0;
+    transition: top 0.2s ease;
+    background: #0e7490; /* cyan-700 — coherente con la paleta del proyecto */
+    color: #ecfeff;      /* cyan-50 */
   }
 
   .skip-link:focus {
-    position: fixed;
-    left: 1rem;
-    top: 1rem;
-    width: auto;
-    height: auto;
-    overflow: visible;
+    top: 0;
   }
 }
 
