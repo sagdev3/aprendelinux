@@ -411,7 +411,7 @@ export default async function Home() {
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <div className="mx-auto grid min-h-screen max-w-[1800px] gap-4 px-4 py-4 lg:grid-cols-[240px_minmax(0,1fr)] lg:px-6 lg:py-6">
         {/* Sidebar — visible solo en lg+; reemplaza al topnav en desktop */}
-        <aside className="sidenav">
+        <aside className="sidenav hidden lg:flex lg:flex-col">
           {/* Logo / marca */}
           <div className="sidenav-brand">
             <span className="sidenav-brand-mark">LQ</span>
