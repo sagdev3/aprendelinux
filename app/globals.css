@@ -1048,30 +1048,6 @@
   #resetProgress {
     @apply order-5 relative;
   }
-
-  /* ── Skip link de accesibilidad ─────────────────────────────────────────── */
-  /*
-   * WCAG 2.4.1: Skip navigation link para usuarios de teclado.
-   * Oculto por defecto, visible solo con focus de teclado.
-   */
-  .skip-link {
-    position: absolute;
-    top: -100%;
-    left: 0;
-    z-index: 9999;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    border-radius: 0 0 8px 0;
-    transition: top 0.2s ease;
-    background: #0e7490; /* cyan-700 — coherente con la paleta del proyecto */
-    color: #ecfeff;      /* cyan-50 */
-  }
-
-  .skip-link:focus {
-    top: 0;
-  }
 }
 
 @layer utilities {

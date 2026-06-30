@@ -468,8 +468,6 @@ export default async function Home() {
         {/* Contenido principal — lg:col-start-2 fixes auto-placement when sidenav is display:none */}
         <section className="overflow-hidden rounded-[20px] border border-slate-800/80 bg-slate-950/70 shadow-2xl shadow-black/25 lg:col-start-2">
           {/* Vistas de la app — ahora JSX real, sin dangerouslySetInnerHTML */}
-          {/* WCAG 2.4.1: skip link para usuarios de teclado */}
-          <a className="skip-link" href="#app">Ir al contenido principal</a>
           <Topbar />
           <AuthModal />
           <main id="app">
