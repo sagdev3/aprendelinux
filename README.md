@@ -1,65 +1,54 @@
 # Linux Quest
 
-Aplicación educativa de comandos Linux con inicio de sesión y progreso guardado en MySQL.
+Linux Quest es una aplicacion educativa para aprender comandos de Linux de forma guiada, practica y progresiva.
 
-## Requisitos
+El proyecto combina lecciones, ejercicios, una terminal simulada, recursos de consulta y seguimiento de progreso para que el usuario pueda practicar sin depender de una terminal real desde el primer momento.
 
-- Node.js con `npm`
-- MySQL o MariaDB
+## Que ofrece
 
-## Configuración
+- Lecciones organizadas por modulos y dificultad.
+- Practica de comandos frecuentes de Linux.
+- Terminal simulada para experimentar con instrucciones basicas.
+- Quizzes y evaluaciones rapidas para reforzar conceptos.
+- Perfil de usuario con progreso, logros y estadisticas.
+- Recursos de apoyo como chuletas, rutas de aprendizaje y glosario.
 
-1. Crea la base de datos y tablas:
+## Como funciona
 
-```bash
-mysql -u root -p < schema.sql
-```
+La aplicacion presenta una experiencia de aprendizaje por secciones. El usuario puede navegar entre modulos, revisar explicaciones, practicar comandos y marcar avances completados.
 
-2. Crea el archivo `.env` desde el ejemplo:
+El progreso se guarda localmente cuando el usuario no ha iniciado sesion. Si crea una cuenta o inicia sesion, el avance se sincroniza con la base de datos para conservarlo entre dispositivos o sesiones.
 
-```bash
-cp .env.example .env
-```
+## Secciones principales
 
-3. Edita `.env` con tus credenciales de MySQL.
+### Aprendizaje
 
-4. Instala dependencias:
+Contiene los modulos principales de Linux Quest. Cada modulo introduce comandos y conceptos con explicaciones cortas, ejercicios y preguntas de practica.
 
-```bash
-npm install
-```
+### Laboratorio
 
-5. Inicia Next.js en desarrollo:
+Incluye una terminal simulada donde el usuario puede probar comandos dentro de un entorno controlado. Esta pensada para practicar sin riesgo y entender el resultado esperado de cada instruccion.
 
-```bash
-npm run dev
-```
+### Perfil
 
-Para compilar producción:
+Muestra el avance del usuario, sus datos de perfil, logros desbloqueados y resumen de actividad.
 
-```bash
-npm run build
-```
+### Recursos
 
-Para iniciar producción después de compilar:
+Reune material de consulta rapida, rutas sugeridas y referencias utiles para repasar comandos o continuar aprendiendo.
 
-```bash
-npm start
-```
+### Mapa
 
-Para probar las rutas del servidor sin depender de una base real:
+Organiza conceptos y comandos en una vista de referencia para entender como se relacionan las distintas partes del ecosistema Linux.
 
-```bash
-npm test
-```
+## Seguridad y sesiones
 
-6. Abre:
+Linux Quest usa sesiones con cookies seguras, proteccion CSRF, limites de intentos para login y registro, y validaciones en las rutas de API.
 
-```text
-http://localhost:3000
-```
+Las sesiones y los limites de acceso se guardan de forma persistente en base de datos. En produccion, la aplicacion requiere un secreto de sesion configurado para evitar usar valores de desarrollo.
 
-## Progreso
+## Estado del proyecto
 
-Sin sesión, el avance se guarda en `localStorage`.
-Con sesión iniciada, se sincroniza en la tabla `user_progress`.
+La aplicacion esta orientada a aprendizaje inicial e intermedio de Linux. La base actual ya incluye autenticacion, progreso persistente, protecciones basicas de seguridad y una interfaz principal funcional.
+
+Como mejora futura, queda migrar gradualmente la logica legacy del navegador hacia componentes React mas separados y agregar pruebas end-to-end para validar flujos completos desde el navegador.
