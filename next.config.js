@@ -2,10 +2,10 @@
 
 /**
  * Las cabeceras de seguridad principales (CSP con nonce, HSTS, X-Frame-Options)
- * se gestionan en middleware.js, que genera un nonce por request.
+ * se gestionan en proxy.js (convención Next.js 16, reemplaza middleware.js).
  *
  * Aquí solo se mantienen cabeceras estáticas para rutas de _next/static y assets
- * que el middleware excluye de forma explícita.
+ * que el proxy excluye de forma explícita.
  */
 const nextConfig = {
   reactStrictMode: true,

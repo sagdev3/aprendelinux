@@ -7,13 +7,15 @@ function generateNonce() {
 }
 
 /**
- * Middleware de Next.js — genera un nonce por request y lo inyecta
+ * Proxy de Next.js 16 — genera un nonce por request y lo inyecta
  * en el Content-Security-Policy. Elimina la necesidad de 'unsafe-inline'.
  *
  * El nonce se pasa como header interno `x-nonce` para que el layout
  * pueda leerlo con `headers()` y aplicarlo a los <Script> que necesiten.
+ *
+ * Reemplaza a middleware.js (deprecado en Next.js 16).
  */
-export function middleware(request) {
+export function proxy(request) {
   const nonce = generateNonce();
   const scriptSrc = [
     "'self'",
