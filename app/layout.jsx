@@ -10,7 +10,6 @@ export default function RootLayout({ children }) {
     <html lang="es" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        cz-shortcut-listen="true"
         style={{
           backgroundColor: "#050816",
           color: "#e2e8f0",

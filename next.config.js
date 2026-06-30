@@ -9,14 +9,16 @@
  */
 const nextConfig = {
   reactStrictMode: true,
+  devIndicators: {
+    position: "bottom-right"
+  },
   async headers() {
     return [
       {
         // Cabeceras de seguridad para archivos estáticos (no pasan por middleware)
         source: "/_next/static/:path*",
         headers: [
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "Cache-Control", value: "public, max-age=31536000, immutable" }
+          { key: "X-Content-Type-Options", value: "nosniff" }
         ]
       }
     ];
