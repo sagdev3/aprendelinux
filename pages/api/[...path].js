@@ -1,9 +1,9 @@
-const { createMysqlPool, handleApi } = require("../../lib/api");
+const { createDatabasePool, handleApi } = require("../../lib/api");
 
 let pool;
 
 function getPool() {
-  if (!pool) pool = createMysqlPool();
+  if (!pool) pool = createDatabasePool();
   return pool;
 }
 
