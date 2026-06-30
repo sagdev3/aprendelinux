@@ -4,7 +4,8 @@ process.env.NODE_ENV = "test";
 const { handleApi, resetApiStateForTests } = require("../lib/api");
 
 class MockPool {
-  constructor() {
+  constructor(dialect = "mysql") {
+    this.dialect = dialect;
     this.users = [];
     this.progress = new Map();
     this.sessions = new Map();
@@ -91,7 +92,7 @@ class MockPool {
     if (sql.startsWith("INSERT INTO users")) {
       if (this.users.some((item) => item.email === params[1])) {
         const error = new Error("Duplicate entry");
-        error.code = "ER_DUP_ENTRY";
+        error.code = this.dialect === "postgres" ? "23505" : "ER_DUP_ENTRY";
         throw error;
       }
       const user = {
@@ -105,7 +106,7 @@ class MockPool {
       return [{ insertId: user.id }];
     }
 
-    if (sql.startsWith("INSERT INTO user_progress") && sql.includes("JSON_ARRAY()")) {
+    if (sql.startsWith("INSERT INTO user_progress") && (sql.includes("JSON_ARRAY()") || sql.includes("'[]'::jsonb"))) {
       this.progress.set(params[0], { active_module: 0, mode: "kid", done_modules: [] });
       return [{ affectedRows: 1 }];
     }
@@ -131,7 +132,7 @@ class MockPool {
       return [[row].filter(Boolean)];
     }
 
-    if (sql.startsWith("INSERT INTO user_progress") && sql.includes("ON DUPLICATE KEY UPDATE")) {
+    if (sql.startsWith("INSERT INTO user_progress") && (sql.includes("ON DUPLICATE KEY UPDATE") || sql.includes("ON CONFLICT"))) {
       this.progress.set(params[0], {
         active_module: params[1],
         mode: params[2],
@@ -144,7 +145,7 @@ class MockPool {
       return [[this.profile].filter(Boolean)];
     }
 
-    if (sql.startsWith("INSERT INTO student_profiles") && sql.includes("ON DUPLICATE KEY UPDATE")) {
+    if (sql.startsWith("INSERT INTO student_profiles") && (sql.includes("ON DUPLICATE KEY UPDATE") || sql.includes("ON CONFLICT"))) {
       this.profile = {
         user_id: params[0],
         display_name: params[1],
@@ -377,6 +378,30 @@ async function csrf(pool) {
       headers: { Cookie: cookie }
     });
     assert.strictEqual(result.response.statusCode, 401);
+
+    const pgPool = new MockPool("postgres");
+    const pgCsrf = await csrf(pgPool);
+    result = await request(pgPool, "POST", "/api/register", {
+      headers: { Cookie: pgCsrf.cookie, "X-CSRF-Token": pgCsrf.token },
+      body: {
+        name: "Linus",
+        email: "linus@example.com",
+        password: "segura123"
+      }
+    });
+    assert.strictEqual(result.response.statusCode, 201);
+    const pgCookie = cookieHeaderFromSetCookie(result.headers["set-cookie"]);
+
+    result = await request(pgPool, "PUT", "/api/progress", {
+      headers: { Cookie: `${pgCookie}; ${pgCsrf.cookie}`, "X-CSRF-Token": pgCsrf.token },
+      body: { active: 2, mode: "pro", done: [0, 2] }
+    });
+    assert.strictEqual(result.response.statusCode, 200);
+
+    result = await request(pgPool, "GET", "/api/progress", {
+      headers: { Cookie: pgCookie }
+    });
+    assert.deepStrictEqual(result.body, { active: 2, mode: "pro", done: [0, 2] });
 
     console.log("server.test.js: OK");
   } catch (error) {
