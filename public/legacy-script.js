@@ -2579,6 +2579,39 @@ $("#resetProgress").addEventListener("click", () => {
   renderLesson();
 });
 
+// Sidebar desktop — buscador global
+const _globalSearchSide = $("#globalSearchSide");
+const _globalSearchResultsSide = $("#globalSearchResultsSide");
+if (_globalSearchSide && _globalSearchResultsSide) {
+  _globalSearchSide.addEventListener("input", (event) => {
+    const query = event.target.value;
+    const rows = globalSearchRows(query);
+    _globalSearchResultsSide.classList.toggle("active", rows.length > 0);
+    _globalSearchResultsSide.innerHTML = rows.map((row) => `
+      <button class="global-result" type="button" data-global-action="${escapeHtml(row.action)}">
+        <strong>${escapeHtml(row.title)}</strong>
+        <span>${escapeHtml(row.type)} · ${escapeHtml(row.detail)}</span>
+      </button>
+    `).join("");
+  });
+  document.addEventListener("click", (e) => {
+    if (!_globalSearchSide.contains(e.target) && !_globalSearchResultsSide.contains(e.target)) {
+      _globalSearchResultsSide.classList.remove("active");
+      _globalSearchResultsSide.innerHTML = "";
+    }
+  });
+}
+
+// Sidebar desktop — reiniciar progreso
+const _resetProgressSide = $("#resetProgressSide");
+if (_resetProgressSide) {
+  _resetProgressSide.addEventListener("click", () => {
+    state.done.clear();
+    state.active = 0;
+    renderLesson();
+  });
+}
+
 document.querySelectorAll("[data-mode]").forEach((button) => {
   button.classList.toggle("active", button.dataset.mode === state.mode);
 });

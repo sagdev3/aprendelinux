@@ -202,6 +202,40 @@
     min-height: 44px;
   }
 
+  /* ── Buscador en sidebar desktop ─────────────────────────────────────────── */
+  .sidenav-search {
+    @apply relative mt-1;
+  }
+
+  .sidenav-search input {
+    @apply w-full rounded-2xl border border-slate-700/80 bg-slate-900/70 px-4 py-2.5
+           text-sm text-slate-100 outline-none placeholder:text-slate-500
+           transition-colors duration-150
+           focus:border-cyan-400/60 focus:ring-2 focus:ring-cyan-400/20;
+    min-height: 44px;
+  }
+
+  .sidenav-search-results {
+    @apply absolute left-0 top-[calc(100%+0.4rem)] z-50 hidden w-full max-h-80
+           overflow-auto rounded-2xl border border-slate-700 bg-slate-950/98 p-1.5
+           shadow-2xl shadow-black/50;
+  }
+
+  .sidenav-search-results.active {
+    @apply grid gap-1;
+  }
+
+  /* ── Botón reiniciar progreso en sidebar ─────────────────────────────────── */
+  .sidenav-reset {
+    @apply flex w-full items-center gap-2 rounded-2xl border border-slate-700/50
+           bg-transparent px-4 py-2.5 text-xs font-medium text-slate-500
+           transition-all duration-150
+           hover:border-rose-500/30 hover:bg-rose-500/8 hover:text-rose-400
+           focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-400;
+    min-height: 40px;
+  }
+
+
   /* ── Buscador global ────────────────────────────────────────────────────── */
   .global-search {
     @apply relative hidden w-[260px] max-w-[24vw] lg:block;
