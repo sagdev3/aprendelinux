@@ -1152,7 +1152,7 @@ glossary.push(
 const state = {
   active: Number(localStorage.getItem("linuxQuestActive") || 0),
   mode: localStorage.getItem("linuxQuestMode") || "kid",
-  done: new Set(JSON.parse(localStorage.getItem("linuxQuestDone") || "[]")),
+  done: new Set(readStoredJsonArray("linuxQuestDone")),
   history: []
 };
 
@@ -1184,6 +1184,16 @@ let activeView = "perfil";
 let csrfToken = null;
 
 const $ = (selector) => document.querySelector(selector);
+
+function readStoredJsonArray(key) {
+  try {
+    const value = JSON.parse(localStorage.getItem(key) || "[]");
+    return Array.isArray(value) ? value : [];
+  } catch {
+    localStorage.removeItem(key);
+    return [];
+  }
+}
 
 const goalRoutes = [
   {
@@ -1587,7 +1597,10 @@ function renderLearningDashboard() {
   $("#achievementList").innerHTML = `<div class="achievement-list">${achievements().map(([name, done]) => `
     <div class="achievement ${done ? "done" : ""}">
       <span class="badge-mark">${done ? "✓" : "·"}</span>
-      <span><strong>${escapeHtml(name)}</strong>${done ? "Conseguido" : "Pendiente"}</span>
+      <span class="achievement-copy">
+        <strong>${escapeHtml(name)}</strong>
+        <small>${done ? "Conseguido" : "Pendiente"}</small>
+      </span>
     </div>
   `).join("")}</div>`;
 }
