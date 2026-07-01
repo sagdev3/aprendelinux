@@ -2190,14 +2190,14 @@ function terminalResponse(raw) {
   }
   if (command === "cat notes.txt") return "Notas: aprende rutas, permisos, procesos, red, servicios y kernel en ese orden.";
   if (command === "cat logs.txt") return "INFO boot completo\nWARN ssh reintento\nINFO kernel modulo ext4 cargado";
-  if (command === "cat /proc/cpuinfo") return "processor : 0\nmodel name : Linux Quest Virtual CPU\ncpu cores : 4";
+  if (command === "cat /proc/cpuinfo") return "processor : 0\nmodel name : LearnLinux Mi SO Virtual CPU\ncpu cores : 4";
   if (command === "cat /etc/fstab") return "UUID=demo-root / ext4 defaults 0 1";
   if (command.startsWith("grep ")) return "kernel modulo ext4 cargado";
   if (command.startsWith("chmod ")) return "permisos actualizados en el laboratorio";
   if (command.startsWith("sudo ")) return "sudo: acción simulada; en un sistema real pediría contraseña y privilegios";
   if (command.startsWith("ps")) return "PID TTY STAT COMMAND\n1 ? Ss systemd\n424 pts/0 S bash\n777 pts/0 R ps";
   if (command.startsWith("kill")) return "señal enviada al PID simulado";
-  if (command === "uname -a") return "Linux questbox 6.9.0-learning #1 SMP x86_64 GNU/Linux";
+  if (command === "uname -a") return "Linux learnbox 6.9.0-learning #1 SMP x86_64 GNU/Linux";
   if (command.startsWith("ip addr")) return "1: lo: 127.0.0.1/8\n2: eth0: 192.168.1.42/24";
   if (command.startsWith("ping")) return "PING simulado: 3 paquetes transmitidos, 3 recibidos, 0% pérdida";
   if (command.startsWith("curl")) return "<html><title>Example Domain</title></html>";
@@ -2207,10 +2207,10 @@ function terminalResponse(raw) {
   if (command === "lsblk") return "NAME SIZE TYPE MOUNTPOINT\nvda  40G disk\nvda1 40G part /";
   if (command === "df -h") return "Filesystem Size Used Avail Use% Mounted on\n/dev/vda1 40G 12G 28G 30% /";
   if (command === "mount") return "/dev/vda1 on / type ext4 (rw,relatime)";
-  if (command === "dmesg" || command === "dmesg -w") return "[0.000000] Linux Quest kernel booting\n[1.204000] ext4 filesystem mounted";
+  if (command === "dmesg" || command === "dmesg -w") return "[0.000000] LearnLinux Mi SO kernel booting\n[1.204000] ext4 filesystem mounted";
   if (command === "lsmod") return "Module Size Used by\next4 942080 1\nbridge 421888 0";
   if (command.startsWith("modinfo")) return "filename: /lib/modules/quest/kernel/fs/ext4/ext4.ko\ndescription: Fourth Extended Filesystem";
-  if (command.startsWith("sysctl")) return "kernel.hostname = questbox\nvm.swappiness = 60";
+  if (command.startsWith("sysctl")) return "kernel.hostname = learnbox\nvm.swappiness = 60";
   if (command.startsWith("man ")) return "Página de manual simulada: nombre, sinopsis, descripción, opciones, ejemplos y archivos relacionados.";
   if (command.startsWith("apropos") || command.startsWith("whatis")) return "Resultado simulado: comando relacionado encontrado en las páginas de manual.";
   if (command.startsWith("find ")) return "./logs.txt\n./notes.txt\n./projects/app.conf";

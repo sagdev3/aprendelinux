@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Linux Quest",
+  title: "LearnLinux Mi SO",
   description: "Ruta práctica para aprender Linux con progreso por estudiante."
 };
 

@@ -6,9 +6,9 @@ import Script from "next/script";
 function Topbar() {
   return (
     <header className="topbar lg:hidden">
-      <a className="brand" href="#app" aria-label="Linux Quest inicio">
-        <span className="brand-mark">LQ</span>
-        <span>Linux Quest</span>
+      <a className="brand" href="#app" aria-label="LearnLinux Mi SO inicio">
+        <span className="brand-mark">LL</span>
+        <span>LearnLinux Mi SO</span>
       </a>
       <nav className="topnav lg:hidden" aria-label="Secciones principales">
         <button className="active" type="button" data-view-target="perfil">Perfil</button>
@@ -414,8 +414,8 @@ export default async function Home() {
         <aside className="sidenav hidden lg:flex lg:flex-col">
           {/* Logo / marca */}
           <div className="sidenav-brand">
-            <span className="sidenav-brand-mark">LQ</span>
-            <span className="sidenav-brand-name">Linux Quest</span>
+            <span className="sidenav-brand-mark">LL</span>
+            <span className="sidenav-brand-name">LearnLinux Mi SO</span>
           </div>
 
           {/* Navegación principal — mismos data-view-target que el topnav */}

@@ -1,4 +1,4 @@
--- Schema PostgreSQL para Linux Quest
+-- Schema PostgreSQL para LearnLinux Mi SO
 -- Usar en Render PostgreSQL (o cualquier DB Postgres)
 -- Ejecutar con: psql $DATABASE_URL -f schema.pg.sql
 

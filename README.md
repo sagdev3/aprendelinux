@@ -1,6 +1,6 @@
-# Linux Quest
+# LearnLinux Mi SO
 
-Linux Quest es una aplicacion educativa para aprender comandos de Linux de forma guiada, practica y progresiva.
+LearnLinux Mi SO es una aplicacion educativa para aprender comandos de Linux de forma guiada, practica y progresiva.
 
 El proyecto combina lecciones, ejercicios, una terminal simulada, recursos de consulta y seguimiento de progreso para que el usuario pueda practicar sin depender de una terminal real desde el primer momento.
 
@@ -23,7 +23,7 @@ El progreso se guarda localmente cuando el usuario no ha iniciado sesion. Si cre
 
 ### Aprendizaje
 
-Contiene los modulos principales de Linux Quest. Cada modulo introduce comandos y conceptos con explicaciones cortas, ejercicios y preguntas de practica.
+Contiene los modulos principales de LearnLinux Mi SO. Cada modulo introduce comandos y conceptos con explicaciones cortas, ejercicios y preguntas de practica.
 
 ### Laboratorio
 
@@ -43,7 +43,7 @@ Organiza conceptos y comandos en una vista de referencia para entender como se r
 
 ## Seguridad y sesiones
 
-Linux Quest usa sesiones con cookies seguras, proteccion CSRF, limites de intentos para login y registro, y validaciones en las rutas de API.
+LearnLinux Mi SO usa sesiones con cookies seguras, proteccion CSRF, limites de intentos para login y registro, y validaciones en las rutas de API.
 
 Las sesiones y los limites de acceso se guardan de forma persistente en base de datos. En produccion, la aplicacion requiere un secreto de sesion configurado para evitar usar valores de desarrollo.
 

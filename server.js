@@ -69,7 +69,7 @@ if (require.main === module) {
   assertSecureSecret();
   const server = createHttpServer(createDatabasePool());
   server.listen(port, () => {
-    console.log(`Linux Quest disponible en http://localhost:${port}`);
+    console.log(`LearnLinux Mi SO disponible en http://localhost:${port}`);
   });
 }
 
